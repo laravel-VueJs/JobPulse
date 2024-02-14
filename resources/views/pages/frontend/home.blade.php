@@ -2,8 +2,5 @@
 @section('content')
     @include('layout.body.header')
 
- <h1 class="text-3xl font-bold underline">
-     Hello world!
- </h1>
-
+    @include('layout.body.footer')
 @endsection

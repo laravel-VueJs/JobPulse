@@ -8,7 +8,7 @@
     {{-- <link href="{{asset('backend/css/bootstrap.css')}}" rel="stylesheet" />--}}
     <link href="{{asset('backend/css/animate.min.css')}}" rel="stylesheet" />
     <link href="{{asset('backend/css/fontawesome.css')}}" rel="stylesheet" />
-{{--    <link href="{{asset('backend/css/style.css')}}" rel="stylesheet" />--}}
+    {{-- <link href="{{asset('backend/css/style.css')}}" rel="stylesheet" />--}}
     <link href="{{asset('backend/css/toastify.min.css')}}" rel="stylesheet" />
     <script src="{{asset('backend/js/toastify-js.js')}}"></script>
     <script src="{{asset('backend/js/axios.min.js')}}"></script>
