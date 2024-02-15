@@ -1,7 +1,4 @@
-<div class="container mx-auto py-10">
-    <div class="text-center">
-        <h1 class="text-3xl font-bold mb-5">Recent Published Jobs</h1>
-    </div>
+<div class="container mx-auto pb-10">
     <div class="w-full">
         <div class="relative center">
             <ul

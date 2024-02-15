@@ -4,6 +4,12 @@
     @include('components.frontend.about.banner')
     @include('components.frontend.about.history')
     @include('components.frontend.about.vision')
-    @include('components.frontend.top-company')
+
+
+    <div class="text-center mt-10 pb-2">
+        <h1 class="text-3xl font-bold mb-5">Companies believe in us</h1>
+    </div>
+
+    @include('components.frontend.home.top-company')
     @include('layout.body.footer')
 @endsection
