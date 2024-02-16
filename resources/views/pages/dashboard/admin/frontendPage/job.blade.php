@@ -1,4 +1,4 @@
 @extends('layout.sidenav-layout')
 @section('content')
-    @include('components')
+    @include('components.dashboard.admin.frontendPage.job')
 @endsection

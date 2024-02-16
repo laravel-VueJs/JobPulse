@@ -1,4 +1,4 @@
 @extends('layout.sidenav-layout')
 @section('content')
-    @include('components.dashboard.admin.summary')
+    @include('components.dashboard.admin.frontendPage.about')
 @endsection

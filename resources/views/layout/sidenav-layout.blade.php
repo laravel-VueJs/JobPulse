@@ -56,7 +56,7 @@
                         <h6>User Name</h6>
                         <hr class="user-dropdown-divider  p-0"/>
                     </div>
-                    <a href="{{ route('userProfile') }}" class="side-bar-item">
+                    <a href="{{ route('admin.profile') }}" class="side-bar-item">
                         <span class="side-bar-item-caption">Profile</span>
                     </a>
                     <a onclick="logout()" href="" class="side-bar-item">
@@ -71,41 +71,45 @@
 
 <div id="sideNavRef" class="side-nav-open">
 
-    <a href="" class="side-bar-item">
+    <a href="{{ route('admin.dashboard') }}" class="side-bar-item">
         <i class="bi bi-graph-up"></i>
         <span class="side-bar-item-caption">Dashboard</span>
     </a>
 
-    <a href="" class="side-bar-item">
+    <a href="{{ route('admin.company') }}" class="side-bar-item">
         <i class="bi bi-people"></i>
         <span class="side-bar-item-caption">Companies</span>
     </a>
 
-    <a href="" class="side-bar-item">
+    <a href="{{ route('admin.job') }}" class="side-bar-item">
         <i class="bi bi-list-nested"></i>
         <span class="side-bar-item-caption">Jobs</span>
     </a>
 
-    <a href="" class="side-bar-item">
+    <a href="{{ route('admin.employee') }}" class="side-bar-item">
         <i class="bi bi-bag"></i>
         <span class="side-bar-item-caption">Employee</span>
     </a>
 
-    <a href="" class="side-bar-item">
+    <a href="{{ route('admin.blog') }}" class="side-bar-item">
         <i class="bi bi-currency-dollar"></i>
         <span class="side-bar-item-caption">Blog</span>
     </a>
 
-    <a href="" class="side-bar-item">
+    <a href="{{ route('admin.frontendPage') }}" class="side-bar-item">
         <i class="bi bi-receipt"></i>
         <span class="side-bar-item-caption">Pages</span>
     </a>
 
-    <a href="" class="side-bar-item">
+    <a href="{{ route('admin.plugin') }}" class="side-bar-item">
         <i class="bi bi-file-earmark-bar-graph"></i>
         <span class="side-bar-item-caption">Plugin</span>
     </a>
 
+    <a href="{{ route('admin.profile') }}" class="side-bar-item">
+        <i class="bi bi-file-earmark-bar-graph"></i>
+        <span class="side-bar-item-caption">Account Settings</span>
+    </a>
 
 </div>
 
