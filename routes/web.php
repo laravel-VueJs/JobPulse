@@ -6,7 +6,13 @@ use App\Http\Controllers\Pages\BlogController;
 use App\Http\Controllers\Pages\ContactController;
 use App\Http\Controllers\Pages\HomeController;
 use App\Http\Controllers\Pages\JobController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+
+
+// Web API Routes
+Route::post('/user-registration',[UserController::class,'UserRegistration']);
+
 
 // Page Routes
 Route::get('/', [HomeController::class,'index'])->name('home');
@@ -47,4 +53,3 @@ Route::prefix('admin')->group(function () {
 }); // End Admin Group Middleware Routes
 
 
-// Web API Routes
