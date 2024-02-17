@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OTPMail;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -68,6 +70,82 @@ class UserController extends Controller
     function UserLogout(Request $request){
         $request->user()->tokens()->delete();
         return redirect('/login');
+    }
+
+    function SendOTPCode(Request $request): JsonResponse
+    {
+
+        try {
+            $request->validate([
+                'email' => 'required|string|email|max:50'
+            ]);
+
+            $email=$request->input('email');
+            $otp=rand(1000,9999);
+            $count=User::where('email','=',$email)->count();
+
+            if($count==1){
+                Mail::to($email)->send(new OTPMail($otp));
+                User::where('email','=',$email)->update(['otp'=>$otp]);
+                return response()->json(['status' => 'success', 'message' => '4 Digit OTP Code has been send to your email !']);
+            }
+            else{
+                return response()->json([
+                    'status' => 'fail',
+                    'message' => 'Invalid Email Address'
+                ]);
+            }
+        }
+        catch (Exception $e){
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function VerifyOTP(Request $request): JsonResponse
+    {
+
+        try {
+            $request->validate([
+                'email' => 'required|string|email|max:50',
+                'otp' => 'required|string|min:4'
+            ]);
+
+            $email=$request->input('email');
+            $otp=$request->input('otp');
+
+            $user = User::where('email','=',$email)->where('otp','=',$otp)->first();
+
+            if(!$user){
+                return response()->json(['status' => 'fail', 'message' => 'Invalid OTP']);
+            }
+
+            // CurrentDate-UpdatedTe=4>Min
+
+            User::where('email','=',$email)->update(['otp'=>'0']);
+
+            $token = $user->createToken('authToken')->plainTextToken;
+            return response()->json(['status' => 'success', 'message' => 'OTP Verification Successful','token'=>$token]);
+        }
+        catch (Exception $e){
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function ResetPassword(Request $request): JsonResponse
+    {
+
+        try{
+            $request->validate([
+                'password' => 'required|string|min:3'
+            ]);
+            $id=Auth::id();
+            $password=$request->input('password');
+            User::where('id','=',$id)->update(['password'=>Hash::make($password)]);
+            return response()->json(['status' => 'success', 'message' => 'Password Request Successful']);
+
+        }catch (Exception $e){
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage(),]);
+        }
     }
 
 
