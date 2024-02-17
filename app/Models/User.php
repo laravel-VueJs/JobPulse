@@ -14,6 +14,6 @@ class User extends Authenticatable
         'role' => 'candidate',
         'status' => 'active'
     ];
-    protected $hidden = ['password', 'otp', 'role', 'status'];
+    protected $hidden = ['password', 'otp'];
 
 }
