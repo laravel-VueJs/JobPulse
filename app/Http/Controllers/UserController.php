@@ -148,7 +148,27 @@ class UserController extends Controller
         }
     }
 
+    function UpdateProfile(Request $request): JsonResponse
+    {
 
+        try{
+            $request->validate([
+                'firstName' => 'required|string|max:50',
+                'lastName' => 'required|string|max:50',
+                'mobile' => 'required|string|max:50',
+            ]);
 
+            User::where('id','=',Auth::id())->update([
+                'firstName'=>$request->input('firstName'),
+                'lastName'=>$request->input('lastName'),
+                'mobile'=>$request->input('mobile'),
+            ]);
+
+            return response()->json(['status' => 'success', 'message' => 'Request Successful']);
+
+        }catch (Exception $e){
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
 
 }

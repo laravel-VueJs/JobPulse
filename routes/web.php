@@ -18,6 +18,7 @@ Route::get('/logout',[UserController::class,'UserLogout'])->middleware('auth:san
 Route::post('/send-otp',[UserController::class,'SendOTPCode']);
 Route::post('/verify-otp',[UserController::class,'VerifyOTP']);
 Route::post('/reset-password',[UserController::class,'ResetPassword'])->middleware('auth:sanctum');
+Route::post('/user-update',[UserController::class,'UpdateProfile'])->middleware('auth:sanctum');
 
 
 // Page Routes
