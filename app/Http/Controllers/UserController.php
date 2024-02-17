@@ -33,6 +33,33 @@ class UserController extends Controller
         }
     }
 
+    function UserLogin(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                // 'email' => 'required|string|email|max:50',
+                'email' => 'string|email|max:50',
+                'password' => 'required|string|min:3'
+            ]);
+
+            // login by email
+            // $user = User::where('email', $request->input('email'))->first();
+
+            // login by email and phone
+            $user = User::where('email', $request->input('email'))->orWhere('mobile', $request->input('mobile'))->first();
+
+            if (!$user || !Hash::check($request->input('password'), $user->password)) {
+                return response()->json(['status' => 'failed', 'message' => 'Invalid User']);
+            }
+
+            $token = $user->createToken('authToken')->plainTextToken;
+            return response()->json(['status' => 'success', 'message' => 'Login Successful','token'=>$token]);
+        }
+        catch (Exception $e){
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
 
 
 

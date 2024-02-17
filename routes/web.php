@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 // Web API Routes
 Route::post('/user-registration',[UserController::class,'UserRegistration']);
+Route::post('/user-login',[UserController::class,'UserLogin']);
 
 
 // Page Routes
