@@ -20,6 +20,12 @@ Route::post('/verify-otp',[UserController::class,'VerifyOTP']);
 Route::post('/reset-password',[UserController::class,'ResetPassword'])->middleware('auth:sanctum');
 Route::post('/user-update',[UserController::class,'UpdateProfile'])->middleware('auth:sanctum');
 
+// Auth Page Routes
+Route::view('/login','pages.auth.login')->name('login');
+Route::view('/register','pages.auth.registration')->name('register');
+Route::view('/sendOtp','pages.auth.send-otp')->name('sendOtp');
+Route::view('/verifyOtp','pages.auth.verify-otp')->name('verifyOtp');
+Route::view('/resetPassword','pages.auth.reset-pass')->name('resetPassword');
 
 // Page Routes
 Route::get('/', [HomeController::class,'index'])->name('home');
@@ -27,10 +33,6 @@ Route::get('/about', [AboutController::class,'aboutPage'])->name('about');
 Route::get('/job', [JobController::class,'jobPage'])->name('job');
 Route::get('/blog', [BlogController::class,'blogPage'])->name('blog');
 Route::get('/contact', [ContactController::class,'contactPage'])->name('contact');
-
-
-// Admin Routes
-
 
 // Admin Dashboard Middleware Group Routes List
 Route::prefix('admin')->group(function () {
