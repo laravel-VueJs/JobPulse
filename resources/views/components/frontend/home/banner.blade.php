@@ -10,19 +10,13 @@
                                 Early Access
                             </span>
                             <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
-                                <span class="sm:text-6xl">
-                                </span> Wireless Bluetooth Earbuds
-                                <span
-                                    class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-600">StellarGlo
+                                <span class="sm:text-6xl" id="title">
                                 </span>
-                                <br>
-                                go beyond sound.
                             </h1>
                         </div>
 
-                        <p class="text-base text-gray-200 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
-                            Immerse yourself in superior audio quality with the StellarGlo Wireless Bluetooth Earbuds.
-                            These sleek and lightweight earbuds deliver crystal-clear sound and rich bass.
+                        <p id="description" class="text-base text-gray-200 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+
                         </p>
 
                     </div>
@@ -96,8 +90,8 @@
                             <iframe frameborder="0" allowfullscreen="1"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                     width="100%" height="100%"
-                                    src="https://www.youtube.com/embed/mr15Xzb1Ook?autoplay=0&amp;mute=0&amp;controls=0&"
-                                    id="widget2">
+                                    src=""
+                                    id="link">
                             </iframe>
                         </div>
                     </div>
@@ -107,3 +101,30 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    getData();
+    async function getData(){
+        try{
+            showLoader();
+            let res=await axios.get("/page-home-read");
+            hideLoader();
+
+            if(res.status===200){
+                document.getElementById('title').innerText=res.data['title'];
+                document.getElementById('description').innerText=res.data['description'];
+                document.getElementById('link').src=res.data['link'];
+            }
+            else{
+                errorToast(res.data['message']);
+            }
+
+        }catch (e) {
+            unauthorized(e.response.status)
+            errorToast(e.response.data.message);
+        }
+    }
+
+</script>
+
