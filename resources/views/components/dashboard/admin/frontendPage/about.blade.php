@@ -18,7 +18,7 @@
                             </p>
                         </div>
                         <div class="w-full p-3 md:flex-1">
-                                <textarea rows="1" type="message" placeholder="your text here.." required
+                                <textarea id="title" rows="1" type="message" placeholder="your text here.." required
                                           class="block w-full px-4 py-4 leading-tight placeholder-gray-400 border rounded dark:placeholder-gray-500 dark:text-gray-400 dark:border-gray-800 dark:bg-gray-800 "></textarea>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                             </p>
                         </div>
                         <div class="w-full p-3 md:flex-1">
-                                <textarea rows="2" type="message" placeholder="your text here.." required
+                                <textarea id="description" rows="2" type="message" placeholder="your text here.." required
                                           class="block w-full px-4 py-4 leading-tight placeholder-gray-400 border rounded dark:placeholder-gray-500 dark:text-gray-400 dark:border-gray-800 dark:bg-gray-800 "></textarea>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                             </p>
                         </div>
                         <div class="w-full p-3 md:flex-1">
-                                <textarea rows="5" type="message" placeholder="your text here.." required
+                                <textarea id="company_history" rows="5" type="message" placeholder="your text here.." required
                                           class="block w-full px-4 py-4 leading-tight placeholder-gray-400 border rounded dark:placeholder-gray-500 dark:text-gray-400 dark:border-gray-800 dark:bg-gray-800 "></textarea>
                         </div>
                     </div>
@@ -59,7 +59,7 @@
                             </p>
                         </div>
                         <div class="w-full p-3 md:flex-1">
-                                <textarea rows="5" type="message" placeholder="your text here.." required
+                                <textarea id="our_vision" rows="5" type="message" placeholder="your text here.." required
                                           class="block w-full px-4 py-4 leading-tight placeholder-gray-400 border rounded dark:placeholder-gray-500 dark:text-gray-400 dark:border-gray-800 dark:bg-gray-800 "></textarea>
                         </div>
                     </div>
@@ -109,12 +109,14 @@
             <div class="flex pt-6 flex-wrap -m-1.5">
                 <div class="w-full md:w-auto p-1.5">
                     <button
+                        onclick="onCancel()"
                         class="flex flex-wrap justify-center w-full px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-200 rounded-md dark:text-gray-300 dark:bg-gray-700 dark:hover:bg-gray-800 dark:border-gray-700 hover:border-gray-300 ">
                         <p>Cancel</p>
                     </button>
                 </div>
                 <div class="w-full md:w-auto p-1.5">
                     <button
+                        onclick="onUpdate()"
                         class="flex flex-wrap justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-500 border border-blue-500 rounded-md hover:bg-indigo-600 ">
                         <p>Save</p>
                     </button>
@@ -123,3 +125,57 @@
         </div>
     </div>
 </section>
+
+<script>
+
+    getData();
+    async function getData(){
+        try{
+            showLoader();
+            let res=await axios.get("/page-about-read");
+            hideLoader();
+
+            if(res.status===200){
+                document.getElementById('title').value=res.data['title'];
+                document.getElementById('description').value=res.data['description'];
+                document.getElementById('company_history').value=res.data['company_history'];
+                document.getElementById('our_vision').value=res.data['our_vision'];
+            }
+            else{
+                errorToast(res.data['message']);
+            }
+
+        }catch (e) {
+            unauthorized(e.response.status)
+            errorToast(e.response.data.message);
+        }
+    }
+
+    async function onUpdate(){
+        let PostBody={
+            "title":document.getElementById('title').value,
+            "description":document.getElementById('description').value,
+            "company_history":document.getElementById('company_history').value,
+            "our_vision":document.getElementById('our_vision').value,
+        }
+
+        showLoader();
+        let res=await axios.post("/page-about-update",PostBody,HeaderToken());
+        hideLoader();
+
+        if(res.data['status']==="success"){
+            successToast(res.data['message'])
+            await getData();
+        }
+        else {
+            errorToast(res.data['message'])
+        }
+    }
+
+    async function onCancel(){
+        if(confirm("Are you sure to cancel?")){
+            await getData();
+        }
+    }
+
+</script>

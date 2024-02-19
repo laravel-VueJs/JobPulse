@@ -37,6 +37,8 @@ Route::get('/contact', [ContactController::class,'contactPage'])->name('contact'
 // Pages read and update routes
 Route::get('/page-home-read', [HomeController::class,'HomePageRead']);
 Route::post('/page-home-update', [HomeController::class,'HomePageUpdate'])->middleware(['auth:sanctum']);
+Route::get('/page-about-read', [AboutController::class,'AboutPageRead']);
+Route::post('/page-about-update', [AboutController::class,'AboutPageUpdate'])->middleware(['auth:sanctum']);
 
 // Admin Dashboard Middleware Group Routes List
 Route::prefix('admin')->group(function () {

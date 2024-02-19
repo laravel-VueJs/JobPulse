@@ -110,16 +110,16 @@
 
         if(res.data['status']==="success"){
             successToast(res.data['message'])
-            await getProfile();
+            await getData();
         }
         else {
             errorToast(res.data['message'])
         }
     }
 
-    function onCancel(){
+    async function onCancel(){
         if(confirm("Are you sure to cancel?")){
-            getData();
+            await getData();
         }
     }
 
