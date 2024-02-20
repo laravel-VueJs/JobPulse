@@ -15,7 +15,7 @@
                             HOME
                         </h2>
 
-                        <p class="text-sm font-medium dark:text-gray-400">Last Updated : <strong>12/03/2024</strong></p>
+                        <p class="text-sm font-medium dark:text-gray-400">Last Updated : <strong id="updated_at_home" class="text-[11px]"></strong></p>
                         <div class="flex items-center justify-center mt-4">
                             <a href="{{ route('admin.frontend.home.edit') }}"
                                class="w-full px-4 py-2 text-center text-gray-900 bg-indigo-300 rounded-md dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-900 hover:bg-indigo-400 hover:text-white">
@@ -38,7 +38,7 @@
                             ABOUT
                         </h2>
 
-                        <p class="text-sm font-medium dark:text-gray-400">Last Updated : <strong>12/03/2024</strong></p>
+                        <p class="text-sm font-medium dark:text-gray-400">Last Updated : <strong id="updated_at_about" class="text-[11px]"></strong></p>
                         <div class="flex items-center justify-center mt-4">
                             <a href="{{ route('admin.frontend.about.edit') }}"
                                class="w-full px-4 py-2 text-center text-gray-900 bg-indigo-300 rounded-md dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-900 hover:bg-indigo-400 hover:text-white">
@@ -61,7 +61,7 @@
                             JOBS
                         </h2>
 
-                        <p class="text-sm font-medium dark:text-gray-400">Last Updated : <strong>12/03/2024</strong></p>
+                        <p class="text-sm font-medium dark:text-gray-400">Last Updated : <strong id="updated_at_job" class="text-[11px]"></strong></p>
                         <div class="flex items-center justify-center mt-4">
                             <a href="{{ route('admin.frontend.job.edit') }}"
                                class="w-full px-4 py-2 text-center text-gray-900 bg-indigo-300 rounded-md dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-900 hover:bg-indigo-400 hover:text-white">
@@ -84,7 +84,7 @@
                             BLOGS
                         </h2>
 
-                        <p class="text-sm font-medium dark:text-gray-400">Last Updated : <strong>12/03/2024</strong></p>
+                        <p class="text-sm font-medium dark:text-gray-400">Last Updated : <strong id="updated_at_blog" class="text-[11px]"></strong></p>
                         <div class="flex items-center justify-center mt-4">
                             <a href="{{ route('admin.frontend.blog.edit') }}"
                                class="w-full px-4 py-2 text-center text-gray-900 bg-indigo-300 rounded-md dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-900 hover:bg-indigo-400 hover:text-white">
@@ -107,7 +107,7 @@
                             CONTACT
                         </h2>
 
-                        <p class="text-sm font-medium dark:text-gray-400">Last Updated : <strong>12/03/2024</strong></p>
+                        <p class="text-sm font-medium dark:text-gray-400">Last Updated : <strong id="updated_at_contact" class="text-[11px]"></strong></p>
                         <div class="flex items-center justify-center mt-4">
                             <a href="{{ route('admin.frontend.contact.edit') }}"
                                class="w-full px-4 py-2 text-center text-gray-900 bg-indigo-300 rounded-md dark:bg-gray-700 dark:text-gray-400 dark:hover:bg-gray-900 hover:bg-indigo-400 hover:text-white">
@@ -119,3 +119,92 @@
         </div>
     </div>
 </section>
+
+<script>
+
+    getHome();
+    async function getHome(){
+
+        showLoader();
+        let res=await axios.get("/page-home-read");
+        hideLoader();
+
+        if(res.status===200){
+            let date = new Date(res.data['updated_at']);
+            date = date.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
+            document.getElementById('updated_at_home').innerText=date;
+        }
+        else{
+            errorToast(res.data['message']);
+        }
+    }
+
+    getAbout();
+    async function getAbout(){
+
+        showLoader();
+        let res=await axios.get("/page-about-read");
+        hideLoader();
+
+        if(res.status===200){
+            let date = new Date(res.data['updated_at']);
+            date = date.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
+            document.getElementById('updated_at_about').innerText=date;
+        }
+        else{
+            errorToast(res.data['message']);
+        }
+    }
+
+    getJob();
+    async function getJob(){
+
+        showLoader();
+        let res=await axios.get("/page-job-read");
+        hideLoader();
+
+        if(res.status===200){
+            let date = new Date(res.data['updated_at']);
+            date = date.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
+            document.getElementById('updated_at_job').innerText=date;
+        }
+        else{
+            errorToast(res.data['message']);
+        }
+    }
+
+    getBlog();
+    async function getBlog(){
+
+        showLoader();
+        let res=await axios.get("/page-blog-read");
+        hideLoader();
+
+        if(res.status===200){
+            let date = new Date(res.data['updated_at']);
+            date = date.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
+            document.getElementById('updated_at_blog').innerText=date;
+        }
+        else{
+            errorToast(res.data['message']);
+        }
+    }
+
+    getContact();
+    async function getContact(){
+
+        showLoader();
+        let res=await axios.get("/page-contact-read");
+        hideLoader();
+
+        if(res.status===200){
+            let date = new Date(res.data['updated_at']);
+            date = date.toLocaleString('en-US', {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
+            document.getElementById('updated_at_contact').innerText=date;
+        }
+        else{
+            errorToast(res.data['message']);
+        }
+    }
+
+</script>
