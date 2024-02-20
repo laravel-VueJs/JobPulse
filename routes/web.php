@@ -41,6 +41,8 @@ Route::get('/page-about-read', [AboutController::class,'AboutPageRead']);
 Route::post('/page-about-update', [AboutController::class,'AboutPageUpdate'])->middleware(['auth:sanctum']);
 Route::get('/page-job-read', [JobController::class,'JobPageRead']);
 Route::post('/page-job-update', [JobController::class,'JobPageUpdate'])->middleware(['auth:sanctum']);
+Route::get('/page-blog-read', [BlogController::class,'BlogPageRead']);
+Route::post('/page-blog-update', [BlogController::class,'BlogPageUpdate'])->middleware(['auth:sanctum']);
 
 // Admin Dashboard Middleware Group Routes List
 Route::prefix('admin')->group(function () {
