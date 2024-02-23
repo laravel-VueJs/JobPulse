@@ -28,11 +28,11 @@ Route::view('/verifyOtp','pages.auth.verify-otp')->name('verifyOtp');
 Route::view('/resetPassword','pages.auth.reset-pass')->name('resetPassword');
 
 // Page Routes
-Route::get('/', [HomeController::class,'index'])->name('home');
-Route::get('/about', [AboutController::class,'aboutPage'])->name('about');
-Route::get('/job', [JobController::class,'jobPage'])->name('job');
-Route::get('/blog', [BlogController::class,'blogPage'])->name('blog');
-Route::get('/contact', [ContactController::class,'contactPage'])->name('contact');
+Route::view('/', 'pages.frontend.home')->name('home');
+Route::view('/about', 'pages.frontend.about')->name('about');
+Route::view('/job', 'pages.frontend.job')->name('job');
+Route::view('/blog', 'pages.frontend.blog')->name('blog');
+Route::view('/contact', 'pages.frontend.contact')->name('contact');
 
 // Pages read and update routes
 Route::get('/page-home-read', [HomeController::class,'HomePageRead']);
@@ -49,23 +49,23 @@ Route::prefix('admin')->group(function () {
 
     // Admin Dashboard
     Route::controller(AdminController::class)->group(function(){
-        Route::get('/dashboard', 'index')->name('admin.dashboard');
+        Route::view('/dashboard', 'pages.dashboard.admin.index')->name('admin.dashboard');
         Route::view('/profile','pages.dashboard.admin.profile')->name('admin.profile');
-        Route::get('/company', 'companyPage')->name('admin.company');
-        Route::get('/job', 'jobPage')->name('admin.job');
-        Route::get('/employee', 'employeePage')->name('admin.employee');
+        Route::view('/company', 'pages.dashboard.admin.company')->name('admin.company');
+        Route::view('/job', 'pages.dashboard.admin.job')->name('admin.job');
+        Route::view('/employee', 'pages.dashboard.admin.employee')->name('admin.employee');
 
-        Route::get('/blog', 'blogPage')->name('admin.blog');
-        Route::get('/blog/categories', 'blogCategoryPage')->name('admin.blog.categories');
+        Route::view('/blog', 'pages.dashboard.admin.blog')->name('admin.blog');
+        Route::view('/blog/categories', 'pages.dashboard.admin.blog-category')->name('admin.blog.categories');
 
-        Route::get('/page', 'adminPage')->name('admin.frontendPage');
-        Route::get('/page/home', 'homePageEdit')->name('admin.frontend.home.edit');
-        Route::get('/page/about', 'aboutPageEdit')->name('admin.frontend.about.edit');
-        Route::get('/page/job', 'jobPageEdit')->name('admin.frontend.job.edit');
-        Route::get('/page/blog', 'blogPageEdit')->name('admin.frontend.blog.edit');
-        Route::get('/page/contact', 'contactPageEdit')->name('admin.frontend.contact.edit');
+        Route::view('/page', 'pages.dashboard.admin.frontendPage.summary')->name('admin.frontendPage');
+        Route::view('/page/home', 'pages.dashboard.admin.frontendPage.home')->name('admin.frontend.home.edit');
+        Route::view('/page/about', 'pages.dashboard.admin.frontendPage.about')->name('admin.frontend.about.edit');
+        Route::view('/page/job', 'pages.dashboard.admin.frontendPage.job')->name('admin.frontend.job.edit');
+        Route::view('/page/blog', 'pages.dashboard.admin.frontendPage.blog')->name('admin.frontend.blog.edit');
+        Route::view('/page/contact', 'pages.dashboard.admin.frontendPage.contact')->name('admin.frontend.contact.edit');
 
-        Route::get('/plugin', 'pluginPage')->name('admin.plugin');
+        Route::view('/plugin', 'pages.dashboard.admin.plugin')->name('admin.plugin');
 
     }); // End Admin Controller Routes
 

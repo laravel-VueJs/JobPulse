@@ -9,10 +9,6 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    public function blogPage(){
-        return view('pages.frontend.blog');
-    }
-
     public function BlogPageRead(){
         return BlogPage::first();
     }

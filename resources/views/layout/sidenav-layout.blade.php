@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title></title>
+    <title>Job Pluse</title>
 
     <link rel="icon" type="image/x-icon" href="{{asset('/favicon.ico')}}" />
     <link href="{{asset('backend/css/bootstrap.css')}}" rel="stylesheet" />
@@ -107,7 +107,7 @@
     </a>
 
     <a href="{{ route('admin.profile') }}" class="side-bar-item">
-        <i class="bi bi-file-earmark-bar-graph"></i>
+        <i class="bi bi-list"></i>
         <span class="side-bar-item-caption">Account Settings</span>
     </a>
 
@@ -144,7 +144,7 @@
 
             localStorage.clear();
             sessionStorage.clear();
-            window.location.href = '/user-login';
+            window.location.href = '/login';
         }
         catch (e){
             errorToast(e.response.data.message);

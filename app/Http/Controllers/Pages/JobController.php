@@ -9,10 +9,6 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
-    public function jobPage(){
-        return view('pages.frontend.job');
-    }
-
     public function JobPageRead(){
         return JobPage::first();
     }
