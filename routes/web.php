@@ -44,7 +44,11 @@ Route::post('/page-job-update', [JobController::class,'JobPageUpdate'])->middlew
 Route::get('/page-blog-read', [BlogController::class,'BlogPageRead']);
 Route::post('/page-blog-update', [BlogController::class,'BlogPageUpdate'])->middleware(['auth:sanctum']);
 
-// Admin Dashboard Middleware Group Routes List
+/*
+|--------------------------------------------------------------------------
+| Admin Dashboard Middleware Group Routes List
+|--------------------------------------------------------------------------
+*/
 Route::prefix('admin')->group(function () {
 
     // Admin Dashboard
