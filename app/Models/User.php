@@ -16,4 +16,9 @@ class User extends Authenticatable
     ];
     protected $hidden = ['password', 'otp'];
 
+//    public function candidateProfile()
+//    {
+//        return $this->hasOne(CandidateProfile::class);
+//    }
+
 }
