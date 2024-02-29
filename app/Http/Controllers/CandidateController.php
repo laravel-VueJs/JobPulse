@@ -26,6 +26,11 @@ class CandidateController extends Controller
                 'bio' => 'string',
             ]);
 
+            $candidate = CandidateProfile::where('user_id',Auth::id())->first();
+            if ($candidate) {
+                return response()->json(['status' => 'fail', 'message' => 'Candidate Profile Already Created']);
+            }
+
             CandidateProfile::create([
                 'photo' => $request->input('photo'),
                 'father_name' => $request->input('father_name'),
