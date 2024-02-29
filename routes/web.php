@@ -25,6 +25,11 @@ Route::post('/user-update',[UserController::class,'UpdateProfile'])->middleware(
 Route::post('/candidate-profile-create',[CandidateController::class,'CandidateProfileCreate'])->middleware('auth:sanctum');
 Route::get('/candidate-profile',[CandidateController::class,'CandidateProfile'])->middleware('auth:sanctum');
 Route::post('/candidate-profile-update',[CandidateController::class,'CandidateProfileUpdate'])->middleware('auth:sanctum');
+// Education
+Route::post('/candidate-education-profile-create',[CandidateController::class,'CandidateEducationProfileCreate'])->middleware('auth:sanctum');
+Route::get('/candidate-education-profile',[CandidateController::class,'CandidateEducationProfile'])->middleware('auth:sanctum');
+Route::post('/candidate-education-profile-update',[CandidateController::class,'CandidateEducationProfileUpdate'])->middleware('auth:sanctum');
+
 
 // Auth Page Routes
 Route::view('/login','pages.auth.login')->name('login');

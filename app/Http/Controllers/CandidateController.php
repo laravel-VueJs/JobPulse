@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CandidateProfile;
+use App\Models\Education;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -92,4 +93,87 @@ class CandidateController extends Controller
         }
 
     }
+
+
+    /*
+     function CandidateEducationProfileCreate(Request $request){
+        return Education::create($request->input());
+    }
+    */
+
+    function CandidateEducationProfileCreate(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'level' => 'required|string',
+                'degree_name' => 'required|string',
+                'major' => 'required|string',
+                'institute_name' => 'required|string',
+                'result' => 'required|string',
+                'passing_year' => 'required|date_format:Y',
+            ]);
+
+            $candidate = Education::where('user_id',Auth::id())->first();
+            if ($candidate) {
+                return response()->json(['status' => 'fail', 'message' => 'Education Profile Already Created']);
+            }
+
+            Education::create([
+                'level' => $request->input('level'),
+                'degree_name' => $request->input('degree_name'),
+                'major' => $request->input('major'),
+                'institute_name' => $request->input('institute_name'),
+                'result' => $request->input('result'),
+                'passing_year' => $request->input('passing_year'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Candidate Education Created Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function CandidateEducationProfile(Request $request): JsonResponse
+    {
+        $candidate = Education::join('candidate_profiles', 'educations.user_id', '=', 'candidate_profiles.user_id')
+            ->where('educations.user_id', Auth::id())
+            ->select('educations.*', 'candidate_profiles.*')
+            ->first();
+        return response()->json(['status' => 'success', 'data' => $candidate]);
+    }
+
+    function CandidateEducationProfileUpdate(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'level' => 'required|string',
+                'degree_name' => 'required|string',
+                'major' => 'required|string',
+                'institute_name' => 'required|string',
+                'result' => 'required|string',
+                'passing_year' => 'required|date_format:Y',
+            ]);
+
+            Education::where('user_id',Auth::id())->update([
+                'level' => $request->input('level'),
+                'degree_name' => $request->input('degree_name'),
+                'major' => $request->input('major'),
+                'institute_name' => $request->input('institute_name'),
+                'result' => $request->input('result'),
+                'passing_year' => $request->input('passing_year'),
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Candidate Education Updated Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+
+
+
+
 }
