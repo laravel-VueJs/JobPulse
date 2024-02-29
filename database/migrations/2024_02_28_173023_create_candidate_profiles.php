@@ -13,21 +13,18 @@ return new class extends Migration
     {
         Schema::create('candidate_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('photo');
-            $table->string('father_name')->nullable();
-            $table->string('mother_name')->nullable();
+            $table->string('photo',200);
+            $table->string('father_name', 50)->nullable();
+            $table->string('mother_name', 50)->nullable();
             $table->date('date_of_birth');
             $table->enum('gender',['male', 'female', 'other'])->default(null);
-            $table->string('blood_group')->nullable();
-            $table->integer('gov_id');
-            $table->string('emergency_phone')->nullable();
+            $table->string('blood_group',10)->nullable();
+            $table->string('gov_id',20);
+            $table->string('emergency_phone',20)->nullable();
             $table->text('address');
             $table->text('bio')->nullable();
 
-            // Foreign Key
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')
-                ->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
         });

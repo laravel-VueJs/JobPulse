@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CandidateController;
 use App\Http\Controllers\Pages\AboutController;
 use App\Http\Controllers\Pages\BlogController;
 use App\Http\Controllers\Pages\ContactController;
@@ -19,6 +20,11 @@ Route::post('/send-otp',[UserController::class,'SendOTPCode']);
 Route::post('/verify-otp',[UserController::class,'VerifyOTP']);
 Route::post('/reset-password',[UserController::class,'ResetPassword'])->middleware('auth:sanctum');
 Route::post('/user-update',[UserController::class,'UpdateProfile'])->middleware('auth:sanctum');
+
+// Candidate Web API Routes
+Route::post('/candidate-profile-create',[CandidateController::class,'CandidateProfileCreate'])->middleware('auth:sanctum');
+Route::get('/candidate-profile',[CandidateController::class,'CandidateProfile'])->middleware('auth:sanctum');
+Route::post('/candidate-profile-update',[CandidateController::class,'CandidateProfileUpdate'])->middleware('auth:sanctum');
 
 // Auth Page Routes
 Route::view('/login','pages.auth.login')->name('login');
