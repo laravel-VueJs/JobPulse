@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CandidateProfile;
 use App\Models\Education;
+use App\Models\Experience;
 use App\Models\Training;
 use App\Models\User;
 use Exception;
@@ -202,6 +203,107 @@ class CandidateController extends Controller
             ->first();
         return response()->json(['status' => 'success', 'data' => $candidate]);
     }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Candidate Experience
+    |--------------------------------------------------------------------------
+    | Candidate Experience Profile Create
+    | Candidate Experience Profile
+    | Candidate Experience Profile Update
+    | Candidate Experience Profile Delete
+    */
+
+    function CandidateExperienceProfileCreate(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'company_name' => 'required|string',
+                'department' => 'required|string',
+                'join' => 'required|date',
+                'resign' => 'date',
+                'is_currently_working' => 'boolean',
+                'company_address' => 'required|string',
+                'responsibilities' => 'required|string',
+            ]);
+
+            Experience::create([
+                'company_name' => $request->input('company_name'),
+                'department' => $request->input('department'),
+                'join' => $request->input('join'),
+                'resign' => $request->input('resign'),
+                'is_currently_working' => $request->input('is_currently_working'),
+                'company_address' => $request->input('company_address'),
+                'responsibilities' => $request->input('responsibilities'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Candidate Experience Created Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function CandidateExperienceProfile(Request $request): JsonResponse
+    {
+        $candidate = Experience::where('user_id', Auth::id())->get();
+        return response()->json(['status' => 'success', 'data' => $candidate]);
+    }
+
+    function CandidateExperienceProfileUpdate(Request $request, $id): JsonResponse
+    {
+        try {
+            $request->validate([
+                'company_name' => 'required|string',
+                'department' => 'required|string',
+                'join' => 'required|date',
+                'resign' => 'date',
+                'is_currently_working' => 'boolean',
+                'company_address' => 'required|string',
+                'responsibilities' => 'required|string',
+            ]);
+
+            // if not found the id then return error
+            if (!Experience::where('id', $id)->exists()) {
+                return response()->json(['status' => 'fail', 'message' => 'Experience Not Found']);
+            }
+
+            Experience::where('id', $id)->update([
+                'company_name' => $request->input('company_name'),
+                'department' => $request->input('department'),
+                'join' => $request->input('join'),
+                'resign' => $request->input('resign'),
+                'is_currently_working' => $request->input('is_currently_working'),
+                'company_address' => $request->input('company_address'),
+                'responsibilities' => $request->input('responsibilities'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Candidate Experience Updated Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function CandidateExperienceProfileDelete($id): JsonResponse
+    {
+        try {
+            // if not found the id then return error
+            if (!Experience::where('id', $id)->exists()) {
+                return response()->json(['status' => 'fail', 'message' => 'Experience Not Found']);
+            }
+
+            Experience::where('id', $id)->delete();
+            return response()->json(['status' => 'success', 'message' => 'Candidate Experience Deleted Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+
 
 
 

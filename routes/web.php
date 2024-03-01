@@ -32,6 +32,11 @@ Route::get('/candidate-education-profile',[CandidateController::class,'Candidate
 // Training
 Route::post('/candidate-training-profile-create-update',[CandidateController::class,'CandidateTrainingProfileCreateUpdate'])->middleware('auth:sanctum');
 Route::get('/candidate-training-profile',[CandidateController::class,'CandidateTrainingProfile'])->middleware('auth:sanctum');
+// Experience
+Route::post('/candidate-experience-profile-create',[CandidateController::class,'CandidateExperienceProfileCreate'])->middleware('auth:sanctum');
+Route::get('/candidate-experience-profile',[CandidateController::class,'CandidateExperienceProfile'])->middleware('auth:sanctum');
+Route::post('/candidate-experience-profile-update/{id}',[CandidateController::class,'CandidateExperienceProfileUpdate'])->middleware('auth:sanctum');
+Route::post('/candidate-experience-profile-delete/{id}',[CandidateController::class,'CandidateExperienceProfileDelete'])->middleware('auth:sanctum');
 
 
 // Auth Page Routes
