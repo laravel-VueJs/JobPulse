@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\CandidateProfile;
 use App\Models\Education;
+use App\Models\Training;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -168,6 +170,56 @@ class CandidateController extends Controller
         catch (Exception $e) {
             return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
         }
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Candidate Training
+    |--------------------------------------------------------------------------
+    | Candidate Training Profile Create/Update
+    | Candidate Training Profile
+    */
+    function CandidateTrainingProfileCreateUpdate(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'title' => 'required|string',
+                'institute' => 'required|string',
+                'completion_year' => 'required|date_format:Y',
+            ]);
+
+            $training = Training::where('user_id',Auth::id())->first();
+            if ($training) {
+                Training::where('user_id',Auth::id())->update([
+                    'title' => $request->input('title'),
+                    'institute' => $request->input('institute'),
+                    'completion_year' => $request->input('completion_year'),
+                    'user_id' => Auth::id(),
+                ]);
+                return response()->json(['status' => 'success', 'message' => 'Candidate Training Updated Successfully']);
+            }
+
+            Training::create([
+                'title' => $request->input('title'),
+                'institute' => $request->input('institute'),
+                'completion_year' => $request->input('completion_year'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Candidate Training Created Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function CandidateTrainingProfile(Request $request): JsonResponse
+    {
+        $candidate = Training::join('candidate_profiles', 'trainings.user_id', '=', 'candidate_profiles.user_id')
+            ->where('trainings.user_id', Auth::id())
+            ->select('candidate_profiles.*', 'trainings.*')
+            ->first();
+        return response()->json(['status' => 'success', 'data' => $candidate]);
     }
 
 

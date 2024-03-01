@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Training extends Model
 {
-    protected $table = 'trainings';
+    // protected $table = 'trainings';
     protected $fillable = [
         'title',
         'institute',
