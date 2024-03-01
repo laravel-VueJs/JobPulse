@@ -103,7 +103,16 @@ class CandidateController extends Controller
     }
     */
 
-    function CandidateEducationProfileCreate(Request $request): JsonResponse
+
+    /*
+    |--------------------------------------------------------------------------
+    | Candidate Education
+    |--------------------------------------------------------------------------
+    | Candidate Education Profile Create/Update
+    | Candidate Education Profile
+    */
+
+    function CandidateEducationProfileCreateUpdate(Request $request): JsonResponse
     {
         try {
             $request->validate([
@@ -115,9 +124,18 @@ class CandidateController extends Controller
                 'passing_year' => 'required|date_format:Y',
             ]);
 
-            $candidate = Education::where('user_id',Auth::id())->first();
-            if ($candidate) {
-                return response()->json(['status' => 'fail', 'message' => 'Education Profile Already Created']);
+            $education = Education::where('user_id',Auth::id())->first();
+            if ($education) {
+                Education::where('user_id',Auth::id())->update([
+                    'level' => $request->input('level'),
+                    'degree_name' => $request->input('degree_name'),
+                    'major' => $request->input('major'),
+                    'institute_name' => $request->input('institute_name'),
+                    'result' => $request->input('result'),
+                    'passing_year' => $request->input('passing_year'),
+                    'user_id' => Auth::id(),
+                ]);
+                return response()->json(['status' => 'success', 'message' => 'Candidate Education Updated Successfully']);
             }
 
             Education::create([
@@ -145,32 +163,6 @@ class CandidateController extends Controller
         return response()->json(['status' => 'success', 'data' => $candidate]);
     }
 
-    function CandidateEducationProfileUpdate(Request $request): JsonResponse
-    {
-        try {
-            $request->validate([
-                'level' => 'required|string',
-                'degree_name' => 'required|string',
-                'major' => 'required|string',
-                'institute_name' => 'required|string',
-                'result' => 'required|string',
-                'passing_year' => 'required|date_format:Y',
-            ]);
-
-            Education::where('user_id',Auth::id())->update([
-                'level' => $request->input('level'),
-                'degree_name' => $request->input('degree_name'),
-                'major' => $request->input('major'),
-                'institute_name' => $request->input('institute_name'),
-                'result' => $request->input('result'),
-                'passing_year' => $request->input('passing_year'),
-            ]);
-            return response()->json(['status' => 'success', 'message' => 'Candidate Education Updated Successfully']);
-        }
-        catch (Exception $e) {
-            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
-        }
-    }
 
 
     /*
