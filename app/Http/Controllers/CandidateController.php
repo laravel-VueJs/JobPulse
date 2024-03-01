@@ -81,6 +81,10 @@ class CandidateController extends Controller
         return response()->json(['status' => 'success', 'data' => $candidate]);
     }
 
+    function CandidateProfileInfo(){
+        return User::with('candidateProfile', 'training', 'education')->where('id',Auth::id())->first();
+    }
+
 
     /*
      function CandidateEducationProfileCreate(Request $request){
