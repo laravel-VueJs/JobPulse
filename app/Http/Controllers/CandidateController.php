@@ -83,7 +83,7 @@ class CandidateController extends Controller
     }
 
     function CandidateProfileInfo(){
-        return User::with('candidateProfile', 'training', 'education')->where('id',Auth::id())->first();
+        return User::with('candidateProfile', 'training', 'education', 'experience')->where('id',Auth::id())->first();
     }
 
 
