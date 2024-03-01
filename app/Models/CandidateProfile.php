@@ -21,6 +21,10 @@ class CandidateProfile extends Model
         'user_id'
     ];
 
+    protected $attributes = [
+        'photo' => 'backend/images/default.jpg',
+    ];
+
 //    public function user()
 //    {
 //        return $this->belongsTo(User::class);

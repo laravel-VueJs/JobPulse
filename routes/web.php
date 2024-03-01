@@ -22,9 +22,9 @@ Route::post('/reset-password',[UserController::class,'ResetPassword'])->middlewa
 Route::post('/user-update',[UserController::class,'UpdateProfile'])->middleware('auth:sanctum');
 
 // Candidate Web API Routes
-Route::post('/candidate-profile-create',[CandidateController::class,'CandidateProfileCreate'])->middleware('auth:sanctum');
+// Profile
+Route::post('/candidate-profile-create-update',[CandidateController::class,'CandidateProfileCreateUpdate'])->middleware('auth:sanctum');
 Route::get('/candidate-profile',[CandidateController::class,'CandidateProfile'])->middleware('auth:sanctum');
-Route::post('/candidate-profile-update',[CandidateController::class,'CandidateProfileUpdate'])->middleware('auth:sanctum');
 // Education
 Route::post('/candidate-education-profile-create-update',[CandidateController::class,'CandidateEducationProfileCreateUpdate'])->middleware('auth:sanctum');
 Route::get('/candidate-education-profile',[CandidateController::class,'CandidateEducationProfile'])->middleware('auth:sanctum');

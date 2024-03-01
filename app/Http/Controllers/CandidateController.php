@@ -13,11 +13,19 @@ use Illuminate\Support\Facades\Auth;
 
 class CandidateController extends Controller
 {
-    function CandidateProfileCreate(Request $request): JsonResponse
+
+    /*
+    |--------------------------------------------------------------------------
+    | Candidate Profile
+    |--------------------------------------------------------------------------
+    | Candidate Profile Create/Update
+    | Candidate Profile
+    */
+    function CandidateProfileCreateUpdate(Request $request): JsonResponse
     {
         try {
             $request->validate([
-                'photo' => 'required|string',
+                'photo' => 'string',
                 'father_name' => 'string',
                 'mother_name' => 'string',
                 'date_of_birth' => 'required|date',
@@ -26,12 +34,25 @@ class CandidateController extends Controller
                 'gov_id' => 'required|numeric',
                 'emergency_phone' => 'string|numeric',
                 'address' => 'required|string',
-                'bio' => 'string',
+                'bio' => 'string'
             ]);
 
             $candidate = CandidateProfile::where('user_id',Auth::id())->first();
             if ($candidate) {
-                return response()->json(['status' => 'fail', 'message' => 'Candidate Profile Already Created']);
+                CandidateProfile::where('user_id',Auth::id())->update([
+                    'photo' => $request->input('photo'),
+                    'father_name' => $request->input('father_name'),
+                    'mother_name' => $request->input('mother_name'),
+                    'date_of_birth' => $request->input('date_of_birth'),
+                    'gender' => $request->input('gender'),
+                    'blood_group' => $request->input('blood_group'),
+                    'gov_id' => $request->input('gov_id'),
+                    'emergency_phone' => $request->input('emergency_phone'),
+                    'address' => $request->input('address'),
+                    'bio' => $request->input('bio'),
+                    'user_id' => Auth::id(),
+                ]);
+                return response()->json(['status' => 'success', 'message' => 'Candidate Profile Updated Successfully']);
             }
 
             CandidateProfile::create([
@@ -58,42 +79,6 @@ class CandidateController extends Controller
     {
         $candidate = CandidateProfile::where('user_id',Auth::id())->first();
         return response()->json(['status' => 'success', 'data' => $candidate]);
-    }
-
-    function CandidateProfileUpdate(Request $request): JsonResponse
-    {
-        try {
-            $request->validate([
-                'photo' => 'required|string',
-                'father_name' => 'string',
-                'mother_name' => 'string',
-                'date_of_birth' => 'required|date',
-                'gender' => 'string',
-                'blood_group' => 'string',
-                'gov_id' => 'required|numeric',
-                'emergency_phone' => 'string|numeric',
-                'address' => 'required|string',
-                'bio' => 'string',
-            ]);
-
-            CandidateProfile::where('user_id',Auth::id())->update([
-                'photo' => $request->input('photo'),
-                'father_name' => $request->input('father_name'),
-                'mother_name' => $request->input('mother_name'),
-                'date_of_birth' => $request->input('date_of_birth'),
-                'gender' => $request->input('gender'),
-                'blood_group' => $request->input('blood_group'),
-                'gov_id' => $request->input('gov_id'),
-                'emergency_phone' => $request->input('emergency_phone'),
-                'address' => $request->input('address'),
-                'bio' => $request->input('bio'),
-            ]);
-            return response()->json(['status' => 'success', 'message' => 'Candidate Profile Updated Successfully']);
-        }
-        catch (Exception $e) {
-            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
-        }
-
     }
 
 
