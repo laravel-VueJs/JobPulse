@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('candidate_others_information', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            
+            $table->bigInteger('current_salary')->nullable();
+            $table->bigInteger('expected_salary')->nullable();
+
             $table->timestamps();
         });
     }
