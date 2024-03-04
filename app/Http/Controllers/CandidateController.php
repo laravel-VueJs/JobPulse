@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CandidateOtherInformation;
 use App\Models\CandidateProfile;
 use App\Models\Education;
 use App\Models\Experience;
@@ -304,6 +305,45 @@ class CandidateController extends Controller
     }
 
 
+    /*
+    |--------------------------------------------------------------------------
+    | Candidate Other Information
+    |--------------------------------------------------------------------------
+    | Candidate Other Information Create
+    | Candidate Other Information
+    | Candidate Other Information Update
+    | Candidate Other Information Delete
+    */
+
+    function CandidateOtherInformationCreate(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'current_salary' => 'numeric',
+                'expected_salary' => 'numeric'
+            ]);
+
+            $candidate = CandidateOtherInformation::where('user_id',Auth::id())->first();
+            if ($candidate) {
+                CandidateOtherInformation::where('user_id',Auth::id())->update([
+                    'current_salary' => $request->input('current_salary'),
+                    'expected_salary' => $request->input('expected_salary'),
+                    'user_id' => Auth::id()
+                ]);
+                return response()->json(['status' => 'success', 'message' => 'Candidate Other Information Updated Successfully']);
+            }
+
+            CandidateOtherInformation::create([
+                'current_salary' => $request->input('current_salary'),
+                'expected_salary' => $request->input('expected_salary'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Candidate Other Information Created Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
 
 
 

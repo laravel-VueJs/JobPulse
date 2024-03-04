@@ -37,6 +37,8 @@ Route::post('/candidate-experience-profile-create',[CandidateController::class,'
 Route::get('/candidate-experience-profile',[CandidateController::class,'CandidateExperienceProfile'])->middleware('auth:sanctum');
 Route::post('/candidate-experience-profile-update/{id}',[CandidateController::class,'CandidateExperienceProfileUpdate'])->middleware('auth:sanctum');
 Route::post('/candidate-experience-profile-delete/{id}',[CandidateController::class,'CandidateExperienceProfileDelete'])->middleware('auth:sanctum');
+// Other Information
+Route::post('/candidate-other-information-create',[CandidateController::class,'CandidateOtherInformationCreate'])->middleware('auth:sanctum');
 
 
 // Auth Page Routes
