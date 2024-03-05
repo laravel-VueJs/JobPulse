@@ -104,7 +104,7 @@ class CandidateController extends Controller
     | Candidate Education Profile
     */
 
-    function CandidateEducationProfileCreateUpdate(Request $request): JsonResponse
+    function CandidateEducationCreate(Request $request): JsonResponse
     {
         try {
             $request->validate([
@@ -115,20 +115,6 @@ class CandidateController extends Controller
                 'result' => 'required|string',
                 'passing_year' => 'required|date_format:Y',
             ]);
-
-            $education = Education::where('user_id',Auth::id())->first();
-            if ($education) {
-                Education::where('user_id',Auth::id())->update([
-                    'level' => $request->input('level'),
-                    'degree_name' => $request->input('degree_name'),
-                    'major' => $request->input('major'),
-                    'institute_name' => $request->input('institute_name'),
-                    'result' => $request->input('result'),
-                    'passing_year' => $request->input('passing_year'),
-                    'user_id' => Auth::id(),
-                ]);
-                return response()->json(['status' => 'success', 'message' => 'Candidate Education Updated Successfully']);
-            }
 
             Education::create([
                 'level' => $request->input('level'),
@@ -148,12 +134,60 @@ class CandidateController extends Controller
 
     function CandidateEducationProfile(Request $request): JsonResponse
     {
-        $candidate = Education::join('candidate_profiles', 'educations.user_id', '=', 'candidate_profiles.user_id')
-            ->where('educations.user_id', Auth::id())
-            ->select('educations.*', 'candidate_profiles.*')
-            ->first();
-        return response()->json(['status' => 'success', 'data' => $candidate]);
+        $education = Education::where('user_id', Auth::id())->get();
+        return response()->json(['status' => 'success', 'data' => $education]);
     }
+
+    function CandidateEducationUpdate(Request $request, $id): JsonResponse
+    {
+        try {
+            $request->validate([
+                'level' => 'required|string',
+                'degree_name' => 'required|string',
+                'major' => 'required|string',
+                'institute_name' => 'required|string',
+                'result' => 'required|string',
+                'passing_year' => 'required|date_format:Y',
+            ]);
+
+            // if not found the id then return error
+            if (!Education::where('id', $id)->exists()) {
+                return response()->json(['status' => 'fail', 'message' => 'Education Not Found']);
+            }
+
+            Education::where('id', $id)->update([
+                'level' => $request->input('level'),
+                'degree_name' => $request->input('degree_name'),
+                'major' => $request->input('major'),
+                'institute_name' => $request->input('institute_name'),
+                'result' => $request->input('result'),
+                'passing_year' => $request->input('passing_year'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Candidate Education Updated Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function CandidateEducationDelete($id): JsonResponse
+    {
+        try {
+            // if not found the id then return error
+            if (!Education::where('id', $id)->exists()) {
+                return response()->json(['status' => 'fail', 'message' => 'Education Not Found']);
+            }
+
+            Education::where('id', $id)->delete();
+            return response()->json(['status' => 'success', 'message' => 'Candidate Education Deleted Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+
 
 
 
