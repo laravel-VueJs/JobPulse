@@ -36,5 +36,14 @@ class User extends Authenticatable
         return $this->hasMany(Experience::class);
     }
 
+    public function CandidateOtherInformation(): HasMany
+    {
+        return $this->hasMany(CandidateOtherInformation::class);
+    }
+
+    public function UserSocialAccounts(): HasMany
+    {
+        return $this->hasMany(UserSocialAccounts::class);
+    }
 
 }
