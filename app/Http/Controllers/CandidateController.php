@@ -23,7 +23,9 @@ class CandidateController extends Controller
     |--------------------------------------------------------------------------
     | Candidate Profile Create/Update
     | Candidate Profile
+    | Candidate Profile Info
     */
+
     function CandidateProfileCreateUpdate(Request $request): JsonResponse
     {
         try {
@@ -89,19 +91,15 @@ class CandidateController extends Controller
     }
 
 
-    /*
-     function CandidateEducationProfileCreate(Request $request){
-        return Education::create($request->input());
-    }
-    */
-
 
     /*
     |--------------------------------------------------------------------------
     | Candidate Education
     |--------------------------------------------------------------------------
-    | Candidate Education Profile Create/Update
+    | Candidate Education Create
     | Candidate Education Profile
+    | Candidate Education Update
+    | Candidate Education Delete
     */
 
     function CandidateEducationCreate(Request $request): JsonResponse
@@ -188,6 +186,7 @@ class CandidateController extends Controller
     }
 
 
+
     /*
     |--------------------------------------------------------------------------
     | Candidate Training
@@ -271,18 +270,17 @@ class CandidateController extends Controller
 
 
 
-
     /*
     |--------------------------------------------------------------------------
     | Candidate Experience
     |--------------------------------------------------------------------------
-    | Candidate Experience Profile Create
+    | Candidate Experience Create
     | Candidate Experience Profile
-    | Candidate Experience Profile Update
-    | Candidate Experience Profile Delete
+    | Candidate Experience Update
+    | Candidate Experience Delete
     */
 
-    function CandidateExperienceProfileCreate(Request $request): JsonResponse
+    function CandidateExperienceCreate(Request $request): JsonResponse
     {
         try {
             $request->validate([
@@ -318,7 +316,7 @@ class CandidateController extends Controller
         return response()->json(['status' => 'success', 'data' => $candidate]);
     }
 
-    function CandidateExperienceProfileUpdate(Request $request, $id): JsonResponse
+    function CandidateExperienceUpdate(Request $request, $id): JsonResponse
     {
         try {
             $request->validate([
@@ -353,7 +351,7 @@ class CandidateController extends Controller
         }
     }
 
-    function CandidateExperienceProfileDelete($id): JsonResponse
+    function CandidateExperienceDelete($id): JsonResponse
     {
         try {
             // if not found the id then return error
@@ -368,6 +366,7 @@ class CandidateController extends Controller
             return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
         }
     }
+
 
 
     /*
@@ -448,12 +447,13 @@ class CandidateController extends Controller
     }
 
 
+
     /*
     |--------------------------------------------------------------------------
     | Candidate Social Link
     |--------------------------------------------------------------------------
     | Candidate Social Link Create
-    | Candidate Social Link
+    | Candidate Social Link Profile
     | Candidate Social Link Update
     | Candidate Social Link Delete
     */
@@ -524,10 +524,6 @@ class CandidateController extends Controller
             return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
         }
     }
-
-
-
-
 
 
 
