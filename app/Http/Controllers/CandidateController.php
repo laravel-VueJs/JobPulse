@@ -188,17 +188,17 @@ class CandidateController extends Controller
     }
 
 
-
-
-
     /*
     |--------------------------------------------------------------------------
     | Candidate Training
     |--------------------------------------------------------------------------
-    | Candidate Training Profile Create/Update
+    | Candidate Training Create
     | Candidate Training Profile
+    | Candidate Training Update
+    | Candidate Training Delete
     */
-    function CandidateTrainingProfileCreateUpdate(Request $request): JsonResponse
+
+    function CandidateTrainingCreate(Request $request): JsonResponse
     {
         try {
             $request->validate([
@@ -206,17 +206,6 @@ class CandidateController extends Controller
                 'institute' => 'required|string',
                 'completion_year' => 'required|date_format:Y',
             ]);
-
-            $training = Training::where('user_id',Auth::id())->first();
-            if ($training) {
-                Training::where('user_id',Auth::id())->update([
-                    'title' => $request->input('title'),
-                    'institute' => $request->input('institute'),
-                    'completion_year' => $request->input('completion_year'),
-                    'user_id' => Auth::id(),
-                ]);
-                return response()->json(['status' => 'success', 'message' => 'Candidate Training Updated Successfully']);
-            }
 
             Training::create([
                 'title' => $request->input('title'),
@@ -233,12 +222,53 @@ class CandidateController extends Controller
 
     function CandidateTrainingProfile(Request $request): JsonResponse
     {
-        $candidate = Training::join('candidate_profiles', 'trainings.user_id', '=', 'candidate_profiles.user_id')
-            ->where('trainings.user_id', Auth::id())
-            ->select('candidate_profiles.*', 'trainings.*')
-            ->first();
-        return response()->json(['status' => 'success', 'data' => $candidate]);
+        $training = Training::where('user_id', Auth::id())->get();
+        return response()->json(['status' => 'success', 'data' => $training]);
     }
+
+    function CandidateTrainingUpdate(Request $request, $id): JsonResponse
+    {
+        try {
+            $request->validate([
+                'title' => 'required|string',
+                'institute' => 'required|string',
+                'completion_year' => 'required|date_format:Y',
+            ]);
+
+            // if not found the id then return error
+            if (!Training::where('id', $id)->exists()) {
+                return response()->json(['status' => 'fail', 'message' => 'Training Not Found']);
+            }
+
+            Training::where('id', $id)->update([
+                'title' => $request->input('title'),
+                'institute' => $request->input('institute'),
+                'completion_year' => $request->input('completion_year'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Candidate Training Updated Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function CandidateTrainingDelete($id): JsonResponse
+    {
+        try {
+            // if not found the id then return error
+            if (!Training::where('id', $id)->exists()) {
+                return response()->json(['status' => 'fail', 'message' => 'Training Not Found']);
+            }
+
+            Training::where('id', $id)->delete();
+            return response()->json(['status' => 'success', 'message' => 'Candidate Training Deleted Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
 
 
 
