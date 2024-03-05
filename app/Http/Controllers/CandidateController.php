@@ -8,6 +8,7 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Training;
 use App\Models\User;
+use App\Models\UserSocialAccounts;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -376,6 +377,84 @@ class CandidateController extends Controller
 
             CandidateOtherInformation::where('id', $id)->delete();
             return response()->json(['status' => 'success', 'message' => 'Candidate Other Information Deleted Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Candidate Social Link
+    |--------------------------------------------------------------------------
+    | Candidate Social Link Create
+    | Candidate Social Link
+    | Candidate Social Link Update
+    | Candidate Social Link Delete
+    */
+
+    function CandidateSocialLinkCreate(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'title' => 'string',
+                'url' => 'string'
+            ]);
+
+            UserSocialAccounts::create([
+                'title' => $request->input('title'),
+                'url' => $request->input('url'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Candidate Social Link Created Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function CandidateSocialLinkProfile(Request $request): JsonResponse
+    {
+        $candidate = UserSocialAccounts::where('user_id', Auth::id())->get();
+        return response()->json(['status' => 'success', 'data' => $candidate]);
+    }
+
+    function CandidateSocialLinkUpdate(Request $request, $id): JsonResponse
+    {
+        try {
+            $request->validate([
+                'title' => 'string',
+                'url' => 'string'
+            ]);
+
+            // if not found the id then return error
+            if (!UserSocialAccounts::where('id', $id)->exists()) {
+                return response()->json(['status' => 'fail', 'message' => 'Social Link Not Found']);
+            }
+
+            UserSocialAccounts::where('id', $id)->update([
+                'title' => $request->input('title'),
+                'url' => $request->input('url'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Candidate Social Link Updated Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function CandidateSocialLinkDelete($id): JsonResponse
+    {
+        try {
+            // if not found the id then return error
+            if (!UserSocialAccounts::where('id', $id)->exists()) {
+                return response()->json(['status' => 'fail', 'message' => 'Social Link Not Found']);
+            }
+
+            UserSocialAccounts::where('id', $id)->delete();
+            return response()->json(['status' => 'success', 'message' => 'Candidate Social Link Deleted Successfully']);
         }
         catch (Exception $e) {
             return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);

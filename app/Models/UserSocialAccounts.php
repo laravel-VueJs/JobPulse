@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserSocialAccounts extends Model
 {
-    protected $fillable = ['title', 'url'];
+    protected $fillable = ['title', 'url', 'user_id'];
 }

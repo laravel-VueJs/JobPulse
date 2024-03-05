@@ -42,7 +42,11 @@ Route::post('/candidate-other-information-create',[CandidateController::class,'C
 Route::get('/candidate-other-information-profile',[CandidateController::class,'CandidateOtherInformationProfile'])->middleware('auth:sanctum');
 Route::post('/candidate-other-information-update/{id}',[CandidateController::class,'CandidateOtherInformationUpdate'])->middleware('auth:sanctum');
 Route::post('/candidate-other-information-delete/{id}',[CandidateController::class,'CandidateOtherInformationDelete'])->middleware('auth:sanctum');
-
+// Social Link
+Route::post('/candidate-social-link-create',[CandidateController::class,'CandidateSocialLinkCreate'])->middleware('auth:sanctum');
+Route::get('/candidate-social-link-profile',[CandidateController::class,'CandidateSocialLinkProfile'])->middleware('auth:sanctum');
+Route::post('/candidate-social-link-update/{id}',[CandidateController::class,'CandidateSocialLinkUpdate'])->middleware('auth:sanctum');
+Route::post('/candidate-social-link-delete/{id}',[CandidateController::class,'CandidateSocialLinkDelete'])->middleware('auth:sanctum');
 
 // Auth Page Routes
 Route::view('/login','pages.auth.login')->name('login');
