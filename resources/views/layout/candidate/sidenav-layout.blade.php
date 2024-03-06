@@ -76,7 +76,7 @@
         <span class="side-bar-item-caption">Dashboard</span>
     </a>
 
-    <a href="" class="side-bar-item">
+    <a href="{{ route('candidate.dashboard.job') }}" class="side-bar-item">
         <i class="bi bi-list-nested"></i>
         <span class="side-bar-item-caption">Jobs</span>
     </a>

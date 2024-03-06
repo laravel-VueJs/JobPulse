@@ -120,6 +120,7 @@ Route::prefix('dashboard')->group(function () {
     // Candidate Dashboard
     Route::controller(CandidateController::class)->group(function(){
         Route::view('/', 'pages.dashboard.candidate.index')->name('candidate.dashboard');
+        Route::view('/jobs', 'pages.dashboard.candidate.job')->name('candidate.dashboard.job');
     }); // End Candidate Controller Routes
 
 }); // End Candidate Group Middleware Routes
