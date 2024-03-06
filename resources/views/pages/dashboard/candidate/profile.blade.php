@@ -1,5 +1,9 @@
-@extends('layout.sidenav-layout')
+@extends('layout.candidate.sidenav-layout')
 @section('content')
-    @include('components')
+    @include('components.dashboard.candidate.profile')
+    @include('components.dashboard.candidate.social')
+    @include('components.dashboard.candidate.education')
+    @include('components.dashboard.candidate.training')
+    @include('components.dashboard.candidate.experience')
+    @include('components.dashboard.candidate.otherInfo')
 @endsection
-

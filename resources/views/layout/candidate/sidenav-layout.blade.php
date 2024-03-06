@@ -81,7 +81,7 @@
         <span class="side-bar-item-caption">Jobs</span>
     </a>
 
-    <a href="" class="side-bar-item">
+    <a href="{{ route('candidate.dashboard.profile') }}" class="side-bar-item">
         <i class="bi bi-list"></i>
         <span class="side-bar-item-caption">Account Settings</span>
     </a>
