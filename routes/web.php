@@ -108,3 +108,20 @@ Route::prefix('admin')->group(function () {
 }); // End Admin Group Middleware Routes
 
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Candidate Dashboard Middleware Group Routes List
+|--------------------------------------------------------------------------
+*/
+Route::prefix('dashboard')->group(function () {
+
+    // Candidate Dashboard
+    Route::controller(CandidateController::class)->group(function(){
+        Route::view('/', 'pages.dashboard.candidate.index')->name('candidate.dashboard');
+    }); // End Candidate Controller Routes
+
+}); // End Candidate Group Middleware Routes
+
+
