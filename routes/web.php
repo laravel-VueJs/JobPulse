@@ -47,10 +47,8 @@ Route::get('/candidate-skill-profile',[CandidateController::class,'CandidateSkil
 Route::post('/candidate-skill-update/{id}',[CandidateController::class,'CandidateSkillUpdate'])->middleware('auth:sanctum');
 Route::post('/candidate-skill-delete/{id}',[CandidateController::class,'CandidateSkillDelete'])->middleware('auth:sanctum');
 // Other Information
-Route::post('/candidate-other-information-create',[CandidateController::class,'CandidateOtherInformationCreate'])->middleware('auth:sanctum');
+Route::post('/candidate-other-information-create-update',[CandidateController::class,'CandidateOtherInformationCreateUpdate'])->middleware('auth:sanctum');
 Route::get('/candidate-other-information-profile',[CandidateController::class,'CandidateOtherInformationProfile'])->middleware('auth:sanctum');
-Route::post('/candidate-other-information-update/{id}',[CandidateController::class,'CandidateOtherInformationUpdate'])->middleware('auth:sanctum');
-Route::post('/candidate-other-information-delete/{id}',[CandidateController::class,'CandidateOtherInformationDelete'])->middleware('auth:sanctum');
 // Social Link
 Route::post('/candidate-social-link-create',[CandidateController::class,'CandidateSocialLinkCreate'])->middleware('auth:sanctum');
 Route::get('/candidate-social-link-profile',[CandidateController::class,'CandidateSocialLinkProfile'])->middleware('auth:sanctum');

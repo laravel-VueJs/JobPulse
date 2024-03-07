@@ -374,13 +374,11 @@ class CandidateController extends Controller
     |--------------------------------------------------------------------------
     | Candidate Other Information
     |--------------------------------------------------------------------------
-    | Candidate Other Information Create
-    | Candidate Other Information
-    | Candidate Other Information Update
-    | Candidate Other Information Delete
+    | Candidate Other Information Create/Update
+    | Candidate Other Information Profile
     */
 
-    function CandidateOtherInformationCreate(Request $request): JsonResponse
+    function CandidateOtherInformationCreateUpdate(Request $request): JsonResponse
     {
         try {
             $request->validate([
@@ -388,12 +386,22 @@ class CandidateController extends Controller
                 'expected_salary' => 'numeric'
             ]);
 
+            $candidate = CandidateOtherInformation::where('user_id',Auth::id())->first();
+            if ($candidate) {
+                CandidateOtherInformation::where('user_id',Auth::id())->update([
+                    'current_salary' => $request->input('current_salary'),
+                    'expected_salary' => $request->input('expected_salary'),
+                    'user_id' => Auth::id()
+                ]);
+                return response()->json(['status' => 'success', 'message' => 'Updated Successfully']);
+            }
+
             CandidateOtherInformation::create([
                 'current_salary' => $request->input('current_salary'),
                 'expected_salary' => $request->input('expected_salary'),
                 'user_id' => Auth::id()
             ]);
-            return response()->json(['status' => 'success', 'message' => 'Candidate Experience Created Successfully']);
+            return response()->json(['status' => 'success', 'message' => 'Created Successfully']);
         }
         catch (Exception $e) {
             return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
@@ -402,49 +410,8 @@ class CandidateController extends Controller
 
     function CandidateOtherInformationProfile(Request $request): JsonResponse
     {
-        $candidate = CandidateOtherInformation::where('user_id', Auth::id())->get();
+        $candidate = CandidateOtherInformation::where('user_id', Auth::id())->first();
         return response()->json(['status' => 'success', 'data' => $candidate]);
-    }
-
-    function CandidateOtherInformationUpdate(Request $request, $id): JsonResponse
-    {
-        try {
-            $request->validate([
-                'current_salary' => 'numeric',
-                'expected_salary' => 'numeric'
-            ]);
-
-            // if not found the id then return error
-            if (!CandidateOtherInformation::where('id', $id)->exists()) {
-                return response()->json(['status' => 'fail', 'message' => 'Other Information Not Found']);
-            }
-
-            CandidateOtherInformation::where('id', $id)->update([
-                'current_salary' => $request->input('current_salary'),
-                'expected_salary' => $request->input('expected_salary'),
-                'user_id' => Auth::id()
-            ]);
-            return response()->json(['status' => 'success', 'message' => 'Candidate Other Information Updated Successfully']);
-        }
-        catch (Exception $e) {
-            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
-        }
-    }
-
-    function CandidateOtherInformationDelete($id): JsonResponse
-    {
-        try {
-            // if not found the id then return error
-            if (!CandidateOtherInformation::where('id', $id)->exists()) {
-                return response()->json(['status' => 'fail', 'message' => 'Other Information Not Found']);
-            }
-
-            CandidateOtherInformation::where('id', $id)->delete();
-            return response()->json(['status' => 'success', 'message' => 'Candidate Other Information Deleted Successfully']);
-        }
-        catch (Exception $e) {
-            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
-        }
     }
 
 
