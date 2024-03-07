@@ -41,6 +41,11 @@ Route::post('/candidate-experience-create',[CandidateController::class,'Candidat
 Route::get('/candidate-experience-profile',[CandidateController::class,'CandidateExperienceProfile'])->middleware('auth:sanctum');
 Route::post('/candidate-experience-update/{id}',[CandidateController::class,'CandidateExperienceUpdate'])->middleware('auth:sanctum');
 Route::post('/candidate-experience-delete/{id}',[CandidateController::class,'CandidateExperienceDelete'])->middleware('auth:sanctum');
+// Skill
+Route::post('/candidate-skill-create',[CandidateController::class,'CandidateSkillCreate'])->middleware('auth:sanctum');
+Route::get('/candidate-skill-profile',[CandidateController::class,'CandidateSkillProfile'])->middleware('auth:sanctum');
+Route::post('/candidate-skill-update/{id}',[CandidateController::class,'CandidateSkillUpdate'])->middleware('auth:sanctum');
+Route::post('/candidate-skill-delete/{id}',[CandidateController::class,'CandidateSkillDelete'])->middleware('auth:sanctum');
 // Other Information
 Route::post('/candidate-other-information-create',[CandidateController::class,'CandidateOtherInformationCreate'])->middleware('auth:sanctum');
 Route::get('/candidate-other-information-profile',[CandidateController::class,'CandidateOtherInformationProfile'])->middleware('auth:sanctum');

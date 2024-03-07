@@ -6,6 +6,7 @@ use App\Models\CandidateOtherInformation;
 use App\Models\CandidateProfile;
 use App\Models\Education;
 use App\Models\Experience;
+use App\Models\Skill;
 use App\Models\Training;
 use App\Models\User;
 use App\Models\UserSocialAccounts;
@@ -519,6 +520,81 @@ class CandidateController extends Controller
 
             UserSocialAccounts::where('id', $id)->delete();
             return response()->json(['status' => 'success', 'message' => 'Candidate Social Link Deleted Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Candidate Skill
+    |--------------------------------------------------------------------------
+    | Candidate Skill Create
+    | Candidate Skill Profile
+    | Candidate Skill Update
+    | Candidate Skill Delete
+    */
+
+    function CandidateSkillCreate(Request $request): JsonResponse
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string'
+            ]);
+
+            Skill::create([
+                'name' => $request->input('name'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Skill Created Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function CandidateSkillProfile(): JsonResponse
+    {
+        $candidate = Skill::where('user_id', Auth::id())->get();
+        return response()->json(['status' => 'success', 'data' => $candidate]);
+    }
+
+    function CandidateSkillUpdate(Request $request, $id): JsonResponse
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string'
+            ]);
+
+            // if not found the id then return error
+            if (!Skill::where('id', $id)->exists()) {
+                return response()->json(['status' => 'fail', 'message' => 'Skill Not Found']);
+            }
+
+            Skill::where('id', $id)->update([
+                'name' => $request->input('name'),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['status' => 'success', 'message' => 'Skill Updated Successfully']);
+        }
+        catch (Exception $e) {
+            return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
+        }
+    }
+
+    function CandidateSkillDelete($id): JsonResponse
+    {
+        try {
+            // if not found the id then return error
+            if (!Skill::where('id', $id)->exists()) {
+                return response()->json(['status' => 'fail', 'message' => 'Skill Not Found']);
+            }
+
+            Skill::where('id', $id)->delete();
+            return response()->json(['status' => 'success', 'message' => 'Skill Deleted Successfully']);
         }
         catch (Exception $e) {
             return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);
