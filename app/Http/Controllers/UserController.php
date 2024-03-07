@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -150,21 +151,45 @@ class UserController extends Controller
 
     function UpdateProfile(Request $request): JsonResponse
     {
+        $user_id=Auth::id();
 
         try{
             $request->validate([
                 'firstName' => 'required|string|max:50',
                 'lastName' => 'required|string|max:50',
                 'mobile' => 'required|string|max:50',
+                'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
 
-            User::where('id','=',Auth::id())->update([
-                'firstName'=>$request->input('firstName'),
-                'lastName'=>$request->input('lastName'),
-                'mobile'=>$request->input('mobile'),
-            ]);
+            if ($request->hasFile('img')) {
 
-            return response()->json(['status' => 'success', 'message' => 'Request Successful']);
+                // Upload New File
+                $img=$request->file('img');
+                $t=time();
+                $file_name=$img->getClientOriginalName();
+                $img_name="{$user_id}-{$t}-{$file_name}";
+                $img_url="uploads/{$img_name}";
+                $img->move(public_path('uploads'),$img_name);
+
+                // Delete Old File
+                $filePath=$request->input('file_path');
+                File::delete($filePath);
+
+                // Update Profile
+                return User::where('id','=',Auth::id())->update([
+                    'firstName'=>$request->input('firstName'),
+                    'lastName'=>$request->input('lastName'),
+                    'mobile'=>$request->input('mobile'),
+                    'img'=>$img_url
+
+                ]);
+            }else {
+                return User::where('id','=',Auth::id())->update([
+                    'firstName'=>$request->input('firstName'),
+                    'lastName'=>$request->input('lastName'),
+                    'mobile'=>$request->input('mobile'),
+                ]);
+            }
 
         }catch (Exception $e){
             return response()->json(['status' => 'fail', 'message' => $e->getMessage()]);

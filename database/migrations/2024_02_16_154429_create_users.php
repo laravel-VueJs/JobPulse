@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('lastName',50);
             $table->string('email',50)->unique();
             $table->string('mobile',50);
+            $table->string('img',400)->nullable();
             $table->string('password',1000);
             $table->string('otp',10);
             $table->enum('role',['admin', 'company', 'candidate'])->default('candidate');
