@@ -57,12 +57,16 @@ Route::get('/candidate-social-link-profile',[CandidateController::class,'Candida
 Route::post('/candidate-social-link-update/{id}',[CandidateController::class,'CandidateSocialLinkUpdate'])->middleware('auth:sanctum');
 Route::post('/candidate-social-link-delete/{id}',[CandidateController::class,'CandidateSocialLinkDelete'])->middleware('auth:sanctum');
 
-// Auth Page Routes
-Route::view('/login','pages.auth.login')->name('login');
-Route::view('/register','pages.auth.registration')->name('register');
+// Auth Admin Page Routes
+Route::view('/admin-login','pages.auth.login')->name('admin.login');
+Route::view('/admin-register','pages.auth.registration')->name('admin.register');
 Route::view('/sendOtp','pages.auth.send-otp')->name('sendOtp');
 Route::view('/verifyOtp','pages.auth.verify-otp')->name('verifyOtp');
 Route::view('/resetPassword','pages.auth.reset-pass')->name('resetPassword');
+
+// Auth Candidate Page Routes
+Route::view('/login','pages.auth.candidate.login')->name('candidate.login');
+Route::view('/register','pages.auth.candidate.registration')->name('candidate.register');
 
 // Page Routes
 Route::view('/', 'pages.frontend.home')->name('home');

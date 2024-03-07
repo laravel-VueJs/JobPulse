@@ -62,9 +62,9 @@
         hideLoader();
 
         if(res.status===200 && res.data['status']==='success'){
-            successToast(res.data.message);
+            successToast("Password changed successfully");
             setTimeout(() => {
-                window.location.href = '/admin/profile';
+                window.location.href = '/login';
             }, 1000);
         }
         else{

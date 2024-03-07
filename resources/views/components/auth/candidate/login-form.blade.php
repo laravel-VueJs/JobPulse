@@ -2,10 +2,10 @@
     <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <div class="p-4 sm:p-7">
             <div class="text-center">
-                <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Admin Sign in</h1>
+                <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Candidate Sign in</h1>
                 <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                     Don't have an account yet?
-                    <a class="text-indigo-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{{ route('admin.register') }}">
+                    <a class="text-indigo-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{{ route('candidate.register') }}">
                         Sign up here
                     </a>
                 </p>
@@ -25,7 +25,7 @@
                 <div class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:me-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ms-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Panel</div>
                 <div class="flex w-full space-x-1">
                     <div class="w-6/12">
-                        <a href="{{ route('candidate.login') }}" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Candidate Login</a>
+                        <a href="{{ route('admin.login') }}" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Admin Login</a>
                     </div>
                     <div class="w-6/12">
                         <a href="#" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Company Login</a>
@@ -81,6 +81,7 @@
                             Fill Email and Password
                         </button>
 
+
                         <button onclick="SubmitLogin()" class="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">Sign in</button>
                     </div>
                 </div>
@@ -110,17 +111,18 @@
                 setToken(res.data['token'])
                 successToast("Login Successfull");
                 setTimeout(() => {
-                    window.location.href = 'admin/profile';
+                    window.location.href = '/dashboard';
                 }, 1000);
             }
             else{
                 errorToast(res.data['message']);
             }
         }
+
     }
 
     function fillEmailAndPassword() {
-        const email = "admin@jobpluse.com";
+        const email = "candidate@jobpluse.com";
         const password = "Password123";
 
         document.getElementById('email').value = email;

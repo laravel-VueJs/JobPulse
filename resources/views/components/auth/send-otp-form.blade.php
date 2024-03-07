@@ -5,7 +5,7 @@
                 <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Forgot password?</h1>
                 <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                     Remember your password?
-                    <a class="text-indigo-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{{ route('login') }}">
+                    <a class="text-indigo-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600" href="{{ route('candidate.login') }}">
                         Sign in here
                     </a>
                 </p>
