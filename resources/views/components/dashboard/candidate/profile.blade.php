@@ -1,6 +1,6 @@
 <div class="max-w-[85rem] px-4 py-4 sm:px-6 lg:px-8 lg:py-10 mx-auto">
     <div class="flex justify-end">
-        <a href="" class=" rounded-lg mr-2 border-2 border-transparent bg-blue-600 px-4 py-2 font-medium text-white sm:inline focus:outline-none focus:ring hover:bg-blue-700">Preview CV</a>
+        <a href="{{ route('candidate.dashboard.resume') }}" target="_blank" class=" rounded-lg mr-2 border-2 border-transparent bg-blue-600 px-4 py-2 font-medium text-white sm:inline focus:outline-none focus:ring hover:bg-blue-700">Preview CV</a>
         <a href="{{ route('candidate.dashboard.account') }}" class=" rounded-lg border-2 border-transparent bg-blue-600 px-4 py-2 font-medium text-white sm:inline focus:outline-none focus:ring hover:bg-blue-700">Account</a>
     </div>
     <div class="my-4 max-w-screen-md border px-4 shadow-xl sm:mx-4 sm:rounded-xl sm:px-4 sm:py-4 md:mx-auto">

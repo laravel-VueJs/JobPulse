@@ -130,6 +130,7 @@ Route::prefix('dashboard')->group(function () {
         Route::view('/jobs', 'pages.dashboard.candidate.job')->name('candidate.dashboard.job');
         Route::view('/profile', 'pages.dashboard.candidate.profile')->name('candidate.dashboard.profile');
         Route::view('/account', 'pages.dashboard.candidate.account')->name('candidate.dashboard.account');
+        Route::view('/resume', 'pages.dashboard.candidate.resume')->name('candidate.dashboard.resume');
     }); // End Candidate Controller Routes
 
 }); // End Candidate Group Middleware Routes
