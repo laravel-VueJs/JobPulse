@@ -25,7 +25,7 @@ Route::post('/user-update',[UserController::class,'UpdateProfile'])->middleware(
 // Profile
 Route::post('/candidate-profile-create-update',[CandidateController::class,'CandidateProfileCreateUpdate'])->middleware('auth:sanctum');
 Route::get('/candidate-profile',[CandidateController::class,'CandidateProfile'])->middleware('auth:sanctum');
-Route::get('/candidate-profile-info',[CandidateController::class,'CandidateProfileInfo'])->middleware('auth:sanctum');
+Route::get('/candidate-profile-info',[CandidateController::class,'CandidateProfileInfo']);
 // Education
 Route::post('/candidate-education-create',[CandidateController::class,'CandidateEducationCreate'])->middleware('auth:sanctum');
 Route::get('/candidate-education-profile',[CandidateController::class,'CandidateEducationProfile'])->middleware('auth:sanctum');

@@ -1071,4 +1071,23 @@
     </div>
 </main>
 
+<script>
+
+    getProfileInfo();
+    async function getProfileInfo(){
+        try{
+            showLoader();
+            let res= await axios.get("/candidate-profile-info");
+            hideLoader();
+
+            document.getElementById('firstName').innerText = res.data.name;
+
+        }catch (e) {
+            unauthorized(e.response.status)
+            errorToast(e.response.data.message);
+        }
+    }
+
+</script>
+
 </body>
